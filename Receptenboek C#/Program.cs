@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json.Serialization;
 using System.Net.Mail;
+using System.Text.Json.Nodes;
 
 
 namespace Receptenboek_C_
@@ -92,20 +93,29 @@ namespace Receptenboek_C_
         }
 
 
-        static void DeleteRecipe() 
-        {
-            Console.WriteLine("Please enter a recipe number to delete");
+        static void DeleteRecipe() {
 
             List<Recipe> recipes = LoadRecipes();
+
+            Console.WriteLine("Please enter a recipe number to delete");
+
             for (int i = 0; i < recipes.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {recipes[i].name}");
             }
 
+
             Console.WriteLine("Select a number to view a recipe.");
             int.TryParse(Console.ReadLine(), out int recipeToDelete);
-
             recipes.RemoveAt(recipeToDelete - 1);
+            string updatedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions { WriteIndented= true }); //deserialize object.
+
+            File.WriteAllText(filePath, updatedJson);
+
+
+
+
+            
             Console.WriteLine($"Recipe {recipeToDelete - 1} has been deleted.");
             Thread.Sleep(1000);
             Console.Clear();
