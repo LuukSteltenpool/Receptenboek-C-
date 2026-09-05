@@ -31,6 +31,10 @@ namespace Receptenboek_C_
 
             recipe.ingredients = Console.ReadLine();
 
+            Console.WriteLine("Please enter the recipes ingredient list.");
+
+            
+
             Console.WriteLine("Please enter the preperation time in minutes");
 
             if (int.TryParse(Console.ReadLine(), out int preperationTime))
@@ -93,13 +97,20 @@ namespace Receptenboek_C_
             Console.WriteLine("Please enter a recipe number to delete");
 
             List<Recipe> recipes = LoadRecipes();
-            List<Recipe> matches = new List<Recipe>();
-
-
-            foreach (Recipe recipe in recipes)
+            for (int i = 0; i < recipes.Count; i++)
             {
-
+                Console.WriteLine($"{i + 1}. {recipes[i].name}");
             }
+
+            Console.WriteLine("Select a number to view a recipe.");
+            int.TryParse(Console.ReadLine(), out int recipeToDelete);
+
+            recipes.RemoveAt(recipeToDelete - 1);
+            Console.WriteLine($"Recipe {recipeToDelete - 1} has been deleted.");
+            Thread.Sleep(1000);
+            Console.Clear();
+            MainMenu();
+
 
         }
 
