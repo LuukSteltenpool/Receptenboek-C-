@@ -1,10 +1,5 @@
-﻿using System.Text.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json.Serialization;
-using System.Net.Mail;
-using System.Text.Json.Nodes;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 
 namespace Receptenboek_C_
@@ -32,10 +27,24 @@ namespace Receptenboek_C_
 
             recipe.ingredients = Console.ReadLine();
 
+
+            bool canInput = true;
             Console.WriteLine("Please enter the recipes ingredient list.");
-
-            
-
+            while (canInput == true)
+            {
+                string input = Console.ReadLine();
+                
+                if (input == "stop" || input == "Stop")
+                {
+                    canInput = false;
+                    
+                }
+                else
+                {
+                    recipe.ingredientsList.Add(input);
+                    Console.WriteLine(recipe.ingredientsList);
+                }
+            }
             Console.WriteLine("Please enter the preperation time in minutes");
 
             if (int.TryParse(Console.ReadLine(), out int preperationTime))
@@ -67,7 +76,6 @@ namespace Receptenboek_C_
             Thread.Sleep(2000);
             Console.Clear();
             MainMenu();
-
 
         }
 
@@ -136,7 +144,7 @@ namespace Receptenboek_C_
             Console.WriteLine("Select a number to view a recipe.");
             int.TryParse(Console.ReadLine(), out int recipeToView);
 
-            Console.WriteLine(recipes[recipeToView - 1]);
+            ShowOneRecipe(recipes[recipeToView - 1]);   
 
         }
 
@@ -242,6 +250,7 @@ namespace Receptenboek_C_
             Console.WriteLine("2: Add a new recipe");
             Console.WriteLine("3: Search a recipe");
             Console.WriteLine("4: Delete a recipe");
+            Console.WriteLine("5: Update recipe");
             int.TryParse(Console.ReadLine(), out int choice);
 
             switch (choice)
@@ -261,6 +270,9 @@ namespace Receptenboek_C_
                 case 4:
                     Console.WriteLine("Delete recipe");
                     DeleteRecipe();
+                    break;
+                case 5:
+                    Console.WriteLine("Update recipe");
                     break;
             }
 
