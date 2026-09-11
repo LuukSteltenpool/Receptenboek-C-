@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 
@@ -73,7 +74,7 @@ namespace Receptenboek_C_
             File.WriteAllText(filePath, json);
             Console.WriteLine("Recipe Created");
 
-            Thread.Sleep(2000);
+            Thread.Sleep(2000); 
             Console.Clear();
             MainMenu();
 
@@ -144,7 +145,20 @@ namespace Receptenboek_C_
             Console.WriteLine("Select a number to view a recipe.");
             int.TryParse(Console.ReadLine(), out int recipeToView);
 
-            ShowOneRecipe(recipes[recipeToView - 1]);   
+            ShowOneRecipe(recipes[recipeToView - 1]);
+            Console.WriteLine("Press r to return.");
+            string returnOrNot = Console.ReadLine();
+            if (returnOrNot == "r")
+            {
+                Thread.Sleep(500);
+                Console.Clear();
+                MainMenu();
+            }
+            else 
+            {
+                Console.WriteLine("invalid input");
+                return;
+            }
 
         }
 
